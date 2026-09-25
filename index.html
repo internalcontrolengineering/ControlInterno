@@ -18,6 +18,8 @@
       --text-main: #f5f5f5;
       --text-soft: rgba(255,255,255,0.62);
       --gold: #c6a85b;
+      --gold-hi: #e8cf85;
+      --gold-soft: rgba(198,168,91,0.55);
       --icon-color: rgba(255,255,255,0.84);
       --border: rgba(255,255,255,0.10);
       --shadow-soft: 0 10px 30px rgba(0,0,0,0.55);
@@ -84,7 +86,7 @@
     /* ===== HEADER ===== */
     #header {
       text-align: center;
-      padding: clamp(6px, 1.5vh, 12px) 14px clamp(2px, 0.5vh, 4px);
+      padding: clamp(6px, 1.5vh, 12px) 14px clamp(6px, 1.2vh, 10px);
       flex-shrink: 0;
       background: transparent;
       border-bottom: 1px solid rgba(255,255,255,0.03);
@@ -93,6 +95,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
     }
     #header::after {
       content: '';
@@ -194,6 +197,99 @@
       border-radius: 99px;
       background: var(--gold);
       box-shadow: 0 0 0 3px rgba(198,168,91,0.12);
+    }
+    /* ===== MARQUESINA DISCRETA BAJO EL SUBTÍTULO ===== */
+    .marquee-bar{
+      position: relative;
+      width: min(680px, 92%);
+      height: 30px;
+      margin: clamp(6px, 1.2vh, 10px) auto 0;
+      background: linear-gradient(180deg, rgba(198,168,91,0.08), rgba(198,168,91,0.02));
+      border: 1px solid rgba(198,168,91,0.28);
+      border-radius: 999px;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      transition: border-color .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
+    }
+    .marquee-bar:hover{
+      border-color: rgba(198,168,91,0.55);
+      background: linear-gradient(180deg, rgba(198,168,91,0.14), rgba(198,168,91,0.04));
+      box-shadow:
+        0 0 0 2px rgba(198,168,91,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .marquee-bar::after{
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg,
+        rgba(11,13,16,0.9) 0%,
+        rgba(11,13,16,0) 10%,
+        rgba(11,13,16,0) 90%,
+        rgba(11,13,16,0.9) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .marquee-track{
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: marqueeScroll 34s linear infinite;
+      will-change: transform;
+      position: relative;
+      z-index: 1;
+    }
+    .marquee-bar:hover .marquee-track{
+      animation-play-state: paused;
+    }
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .marquee-track{ animation: none; }
+    }
+    .marquee-item{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+      font-size: clamp(0.62rem, 1.3vw, 0.74rem);
+      font-weight: 600;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: rgba(232,207,133,0.85);
+      text-shadow: 0 0 8px rgba(198,168,91,0.35);
+    }
+    .marquee-item .mq-sep{
+      color: rgba(198,168,91,0.55);
+      font-weight: 400;
+      margin: 0 4px;
+    }
+    .marquee-item .mq-cta{
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(198,168,91,0.22);
+      border: 1px solid rgba(198,168,91,0.4);
+      color: rgba(232,207,133,0.95);
+      text-shadow: none;
+      margin-left: 6px;
+    }
+    @media (max-width: 600px){
+      .marquee-item{
+        letter-spacing: 1px;
+        padding: 0 14px;
+        gap: 8px;
+      }
+      .marquee-bar{
+        width: 100%;
+      }
     }
     /* ===== CONTENT CONTAINER ===== */
     .icon-container {
@@ -465,7 +561,7 @@
       border-color: rgba(198,168,91,0.95);
       transform: translateY(-2px);
     }
-    /* ===== FOOTER CORREGIDO - CENTRADO PERFECTO ===== */
+    /* ===== FOOTER ===== */
     #footer {
       display: flex;
       align-items: center;
@@ -654,6 +750,33 @@
          class="logo" alt="Logo Control Interno" />
     <div class="header-depto">Departamento de Control Interno</div>
     <div class="header-subtitle">Administración Integral de Riesgos y Controles</div>
+    <!-- MARQUESINA debajo del subtítulo -->
+    <div class="marquee-bar" onclick="window.location.href='https://internalcontrolengineering.github.io/CI/'" role="button" tabindex="0" aria-label="Conoce sobre el Departamento de Control Interno">
+      <div class="marquee-track">
+        <span class="marquee-item">
+          Conoce sobre el Departamento de Control Interno
+          <span class="mq-sep">|</span>
+          Funciones
+          <span class="mq-sep">|</span>
+          Componentes
+          <span class="mq-sep">|</span>
+          Mitos y Realidades
+          <span class="mq-sep">|</span>
+          <span class="mq-cta">Clic aquí</span>
+        </span>
+        <span class="marquee-item">
+          Conoce sobre el Departamento de Control Interno
+          <span class="mq-sep">|</span>
+          Funciones
+          <span class="mq-sep">|</span>
+          Componentes
+          <span class="mq-sep">|</span>
+          Mitos y Realidades
+          <span class="mq-sep">|</span>
+          <span class="mq-cta">Clic aquí</span>
+        </span>
+      </div>
+    </div>
     <div class="quick-actions">
       <button type="button" class="qa-btn" id="searchBtn" aria-label="Búsqueda rápida (Ctrl+K)">
         <i class="fas fa-magnifying-glass"></i>
@@ -706,7 +829,6 @@
     <div id="normatividad" class="section">
       <div class="content-wrapper">
         <ul class="grid">
-          <!-- NUEVO: Matriz Documental (a la izquierda de Normativa 360) -->
           <li><div onclick="openApp('matrizDocumental')" class="icon-app" role="button" tabindex="0"><i class="fas fa-table"></i><span>MATRIZ DOCUMENTAL</span></div></li>
           <li><div onclick="openApp('normativa360')" class="icon-app" role="button" tabindex="0"><i class="fas fa-file-signature"></i><span>NORMATIVA 360°</span></div></li>
           <li><div onclick="openApp('visum')" class="icon-app" role="button" tabindex="0"><i class="fas fa-ranking-star"></i><span>VISUM</span></div></li>
@@ -741,9 +863,7 @@
           <li><div onclick="openApp('conventio')" class="icon-app" role="button" tabindex="0"><i class="fas fa-file-lines"></i><span>CONVENTIO</span></div></li>
           <li><div onclick="openApp('genius')" class="icon-app" role="button" tabindex="0"><i class="fas fa-lightbulb"></i><span>GENIUS</span></div></li>
           <li><div onclick="openApp('omnes')" class="icon-app" role="button" tabindex="0"><i class="fas fa-envelope-open"></i><span>OMNES</span></div></li>
-          <!-- NUEVO MÓDULO CENSUS -->
           <li><div onclick="openApp('census')" class="icon-app" role="button" tabindex="0"><i class="fas fa-people-group"></i><span>CENSUS</span></div></li>
-          <!-- NUEVO MÓDULO HERMES -->
           <li><div onclick="openApp('hermes')" class="icon-app" role="button" tabindex="0"><i class="fas fa-share-nodes"></i><span>HERMES</span></div></li>
         </ul>
       </div>
@@ -751,7 +871,7 @@
         <button class="back-btn" onclick="goHome()">← Volver</button>
       </div>
     </div>
-    <!-- INGENIERÍA DE CONTROL (con Control de Gastos y Semáforo Donataria) -->
+    <!-- INGENIERÍA DE CONTROL -->
     <div id="ingenieria" class="section">
       <div class="content-wrapper">
         <ul class="grid">
@@ -772,7 +892,6 @@
       <div class="content-wrapper">
         <ul class="grid">
           <li><div onclick="openApp('sdci')" class="icon-app" role="button" tabindex="0"><i class="fas fa-person-chalkboard"></i><span>SDCI</span></div></li>
-          <li><div onclick="openApp('ci')" class="icon-app" role="button" tabindex="0"><i class="fas fa-flag-checkered"></i><span>CI</span></div></li>
         </ul>
       </div>
       <div class="back-btn-wrapper">
@@ -783,12 +902,10 @@
     <div id="configuracion" class="section">
       <div class="content-wrapper">
         <ul class="grid">
-          <!-- NUEVO: PagApp (a la izquierda de Natalis) -->
           <li><div onclick="openApp('pagapp')" class="icon-app" role="button" tabindex="0"><i class="fas fa-money-bill-transfer"></i><span>PagApp</span></div></li>
           <li><div onclick="openApp('natalis')" class="icon-app" role="button" tabindex="0"><i class="fas fa-birthday-cake"></i><span>NATALIS</span></div></li>
           <li><div onclick="openApp('cleaner')" class="icon-app" role="button" tabindex="0"><i class="fas fa-trash-can"></i><span>CLEANER</span></div></li>
           <li><div onclick="openApp('borrador-sdci')" class="icon-app" role="button" tabindex="0"><i class="fas fa-eraser"></i><span>BORRADOR SDCI</span></div></li>
-          <!-- NUEVO: Catálogo Front -->
           <li><div onclick="openApp('catalogo-front')" class="icon-app" role="button" tabindex="0"><i class="fas fa-cubes"></i><span>CATÁLOGO FRONT</span></div></li>
         </ul>
       </div>
@@ -846,13 +963,11 @@
     configuracion: 'Configuración'
   };
   const APPS = {
-    // NUEVO: Matriz Documental
     matrizDocumental: { id: 'matrizDocumental', label: 'MATRIZ DOCUMENTAL', section: 'normatividad', icon: 'fa-table', url: "https://internalcontrolengineering.github.io/Matriz-Documental/" },
     normativa360: { id: 'normativa360', label: 'NORMATIVA 360°', section: 'normatividad', icon: 'fa-file-signature', url: "https://internalcontrolengineering.github.io/CSWNormativa360/" },
     visum:        { id: 'visum',        label: 'VISUM',        section: 'normatividad', icon: 'fas fa-ranking-star', url: "https://internalcontrolengineering.github.io/VisumCSW/" },
     glossarium:   { id: 'glossarium',   label: 'GLOSSARIUM',   section: 'normatividad', icon: 'fa-spell-check',     url: "https://internalcontrolengineering.github.io/GlossariumCSW/" },
     sdci:         { id: 'sdci',         label: 'SDCI',         section: 'cultura',      icon: 'fa-person-chalkboard', url: "https://internalcontrolengineering.github.io/SDCI_CSW/" },
-    ci:           { id: 'ci',           label: 'CI',           section: 'cultura',      icon: 'fa-flag-checkered', url: "https://internalcontrolengineering.github.io/CI/" },
     marc:         { id: 'marc',         label: 'MARC',         section: 'riesgos',      icon: 'fa-gauge-high',      url: "https://internalcontrolengineering.github.io/MARC.CSW/" },
     bia:          { id: 'bia',          label: 'BIA',          section: 'riesgos',      icon: 'fas fa-magnifying-glass-chart', url: "https://internalcontrolengineering.github.io/BIA/" },
     novarum:      { id: 'novarum',      label: 'NOVARUM',      section: 'administracion', icon: 'fa-diagram-project', url: "https://internalcontrolengineering.github.io/NovarumCSW/" },
@@ -863,16 +978,12 @@
     conventio:    { id: 'conventio',    label: 'CONVENTIO',    section: 'administracion', icon: 'fa-file-lines',      url: "https://internalcontrolengineering.github.io/ConventioCSW/" },
     genius:       { id: 'genius',       label: 'GENIUS',       section: 'administracion', icon: 'fa-lightbulb',       url: "https://internalcontrolengineering.github.io/GeniusCSW/" },
     omnes:        { id: 'omnes',        label: 'OMNES',        section: 'administracion', icon: 'fa-envelope-open',   url: "https://internalcontrolengineering.github.io/OmnesCSW/" },
-    // NUEVO MÓDULO CENSUS
     census:       { id: 'census',       label: 'CENSUS',       section: 'administracion', icon: 'fa-people-group',    url: "https://internalcontrolengineering.github.io/Census/" },
-    // NUEVO MÓDULO HERMES
     hermes:       { id: 'hermes',       label: 'HERMES',       section: 'administracion', icon: 'fa-share-nodes',     url: "https://internalcontrolengineering.github.io/Hermes/" },
-    // NUEVO MÓDULO PagApp
     pagapp:       { id: 'pagapp',       label: 'PagApp',       section: 'configuracion',  icon: 'fa-money-bill-transfer', url: "https://internalcontrolengineering.github.io/PagApp/" },
     natalis:      { id: 'natalis',      label: 'NATALIS',      section: 'configuracion',  icon: 'fa-birthday-cake',   url: "https://internalcontrolengineering.github.io/NatalisCSW/" },
     cleaner:      { id: 'cleaner',      label: 'CLEANER',      section: 'configuracion',  icon: 'fa-trash-can',       url: "https://internalcontrolengineering.github.io/CleanerCSW/" },
     "borrador-sdci": { id: "borrador-sdci", label: "BORRADOR SDCI", section: 'configuracion', icon: "fa-eraser", url: "https://internalcontrolengineering.github.io/borradorSDCI_CSW/" },
-    // NUEVO: Catálogo Front
     "catalogo-front": { id: "catalogo-front", label: "CATÁLOGO FRONT", section: 'configuracion', icon: "fa-cubes", url: "https://internalcontrolengineering.github.io/Catalogo-de-Estilos/" },
     csw_donatarias: { id: 'csw_donatarias', label: 'CSW DONATARIAS', section: 'ingenieria', icon: 'fa-hand-holding-heart', url: "https://internalcontrolengineering.github.io/DonatariasCSW/" },
     ido:            { id: 'ido',        label: 'iDO CSW',      section: 'ingenieria', icon: 'fas fa-id-card', url: "https://internalcontrolengineering.github.io/iDO/" },
@@ -902,12 +1013,10 @@
     container.innerHTML = '';
     let ids = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
     const apps = ids.slice(0, RECENT_LIMIT).map(id => APPS[id]).filter(Boolean);
-    
     if(apps.length === 0){
       container.innerHTML = '<div style="opacity:0.6; font-size:0.9rem;">Sin actividad reciente</div>';
       return;
     }
-    
     apps.forEach(app => {
       const chip = document.createElement('button');
       chip.type = 'button';
@@ -929,9 +1038,7 @@
     if(id === 'home') renderRecents();
     closeCmd();
   }
-  function goHome() { 
-    openSection('home'); 
-  }
+  function goHome() { openSection('home'); }
   function openApp(appId){
     const app = APPS[appId];
     if(!app) return;
@@ -939,9 +1046,7 @@
     pushRecent(appId);
     window.location.href = app.url;
   }
-  function openConfig() {
-    openSection('configuracion');
-  }
+  function openConfig() { openSection('configuracion'); }
   function openCmd(){
     const root = document.getElementById('cmdPalette');
     root.classList.remove('hidden');
@@ -950,23 +1055,18 @@
     renderCmdResults('');
     setTimeout(() => input.focus(), 10);
   }
-  function closeCmd(){
-    document.getElementById('cmdPalette').classList.add('hidden');
-  }
+  function closeCmd(){ document.getElementById('cmdPalette').classList.add('hidden'); }
   function renderCmdResults(q){
     const query = (q || '').trim().toLowerCase();
     const ul = document.getElementById('cmdResults');
     ul.innerHTML = '';
-    
     const list = Object.values(APPS)
       .filter(a => !query || `${a.label} ${a.id} ${SECTION_LABELS[a.section] || ''}`.toLowerCase().includes(query))
       .sort((a,b) => a.section.localeCompare(b.section) || a.label.localeCompare(b.label));
-    
     if(list.length === 0){
       ul.innerHTML = '<li style="opacity:0.65; cursor:default;">Sin resultados</li>';
       return;
     }
-    
     list.forEach(app => {
       const li = document.createElement('li');
       li.innerHTML = `
